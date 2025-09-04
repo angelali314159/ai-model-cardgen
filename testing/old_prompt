@@ -1,0 +1,41 @@
+        context_info = f"""
+**Additional Context:**
+• Provided Model Name: {model_name if model_name else 'Not provided'}
+• Provided Developer Name: {developer_name if developer_name else 'Not provided'}
+
+Use this information to help validate or supplement what you find in the website content.
+"""
+    
+    prompt = f"""
+You are an AI assistant specialized in extracting information from web content to create AI model cards.
+
+I have scraped content from a website about an AI model, and I need you to extract specific information fields.
+
+**Website Content:**
+{scraped_content}
+{context_info}
+**Required Fields to Extract:**
+{fields_str}
+
+**Instructions:**
+1. Analyze the provided website content carefully
+2. Extract information for each of the required fields listed above
+3. If additional context is provided above, use it to supplement or validate the extracted information
+4. If information for a specific field is not found or cannot be determined from the content, use "Not found" as the value
+5. Return the results in valid JSON format with the field names as keys
+6. Be accurate and only extract information that is explicitly stated or can be reasonably inferred from the content
+7. For dates, use YYYY-MM-DD format if possible
+8. For keywords, provide a comma-separated string of relevant terms
+
+**Expected JSON Output Format:**
+{{
+    "ai_model_name": "extracted name or provided name or 'Not found'",
+    "model_developer_name": "extracted developer or provided developer or 'Not found'",
+    "model_release_stage_version": "extracted stage/version or 'Not found'",
+    "release_date": "extracted date or 'Not found'",
+    "summary": "extracted summary or 'Not found'",
+    "keywords": "extracted keywords or 'Not found'"
+}}
+
+Please provide only the JSON output, no additional text or explanations.
+"""
