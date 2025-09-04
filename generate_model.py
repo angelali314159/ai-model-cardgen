@@ -18,6 +18,7 @@ def main(model_name="Derm Foundation", developer_name="Google Developer"):
     print("=" * 60)
     print("AI Model Card Generator - Web Scraping Module")
     print("=" * 60)
+    print(f"Target URL: {target_url}")
     print(f"Model Name: {model_name}")
     print(f"Developer Name: {developer_name}")
     print("-" * 60)
@@ -83,12 +84,55 @@ def main(model_name="Derm Foundation", developer_name="Google Developer"):
         scraper.close()
         print("\n🔒 Browser session closed.")
 
-if __name__ == "__main__":
-    # Run the main scraping and extraction function with hardcoded values
-    model_name = "Derm Foundation"
-    developer_name = "Google Developer"
+def get_user_input():
+    """Get model name and developer name from user input"""
+    print("🔧 AI Model Card Generator Setup")
+    print("=" * 40)
     
-    scraped_result, extracted_result = main(model_name, developer_name)
+    try:
+        # Get model name from user
+        user_model_name = input("Enter the model name: ").strip()
+        if not user_model_name:
+            print("⚠️  No model name provided, using default")
+            user_model_name = None
+        
+        # Get developer name from user
+        user_developer_name = input("Enter the developer name: ").strip()
+        if not user_developer_name:
+            print("⚠️  No developer name provided, using default")
+            user_developer_name = None
+        
+        print(f"\n📝 User Input Received:")
+        print(f"   • Model Name: {user_model_name if user_model_name else 'Not provided (will use default)'}")
+        print(f"   • Developer Name: {user_developer_name if user_developer_name else 'Not provided (will use default)'}")
+        
+        return user_model_name, user_developer_name
+        
+    except KeyboardInterrupt:
+        print("\n\n❌ Operation cancelled by user")
+        return None, None
+    except Exception as e:
+        print(f"❌ Error getting user input: {str(e)}")
+        return None, None
+
+if __name__ == "__main__":
+    # Get user input
+    user_model, user_developer = get_user_input()
+    
+    # Check if user cancelled
+    if user_model is None and user_developer is None:
+        print("Exiting...")
+        exit(0)
+    
+    # Use hardcoded values (for now, as requested)
+    # Note: User input is collected but hardcoded values are still used
+    hardcoded_model_name = "Derm Foundation"
+    hardcoded_developer_name = "Google Developer"
+    
+    print(f"\n📋 Processing Information:")
+    
+    # Run the main scraping and extraction function with hardcoded values
+    scraped_result, extracted_result = main(hardcoded_model_name, hardcoded_developer_name)
     
     print("\n" + "=" * 60)
     print("Script execution completed.")
