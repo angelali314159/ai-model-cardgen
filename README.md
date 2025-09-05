@@ -1,3 +1,1 @@
 # ai-model-cardgen
-
-hi
