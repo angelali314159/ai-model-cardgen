@@ -1,4 +1,7 @@
 # Enviromnment variables file
 .env
 
+/database/node_modules
+
+/frontend/node_modules
 

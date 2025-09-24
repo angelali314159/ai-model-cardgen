@@ -1,5 +1,5 @@
-from web_scraper import WebScraper
-from fill_card import extract_model_info, display_extracted_info, save_extracted_info
+from src.web_scraper import WebScraper
+from src.fill_card import extract_model_info, display_extracted_info, save_extracted_info
 import json
 from datetime import datetime
 
@@ -51,7 +51,7 @@ def main(model_name="Derm Foundation", developer_name="Google Developer"):
             result["provided_developer_name"] = developer_name
             
             # Save scraped data to JSON file
-            output_file = "scraped_data.json"
+            output_file = "output/scraped_data.json"
             with open(output_file, 'w', encoding='utf-8') as f:
                 json.dump(result, f, indent=2, ensure_ascii=False)
             
