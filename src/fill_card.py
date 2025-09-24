@@ -186,7 +186,7 @@ def extract_model_info(scraped_data, model_name=None, developer_name=None):
     except Exception as e:
         return {"error": f"Unexpected error: {str(e)}"}
 
-def save_extracted_info(extracted_info, filename="extracted_model_info.json"):
+def save_extracted_info(extracted_info, filename="output/extracted_model_info.json"):
     """Save extracted information to JSON file"""
     try:
         with open(filename, 'w', encoding='utf-8') as f:
