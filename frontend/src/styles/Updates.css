@@ -1,0 +1,110 @@
+.updates-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+  
+  .page-header p {
+    font-size: 1.1rem;
+    color: #666666;
+    font-weight: 400;
+  }
+  
+  .updates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .update-item {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+  
+  .update-item:hover {
+    border-color: #d0d0d0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .update-date {
+    font-size: 0.9rem;
+    color: #999999;
+    font-weight: 500;
+    min-width: 100px;
+    padding-top: 4px;
+  }
+  
+  .update-content {
+    flex: 1;
+  }
+  
+  .update-content h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+  
+  .update-content p {
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  
+  .update-type {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .update-type.feature {
+    background-color: #e6f7ff;
+    color: #0066cc;
+  }
+  
+  .update-type.improvement {
+    background-color: #f0f9ff;
+    color: #0080ff;
+  }
+  
+  .update-type.bug-fix {
+    background-color: #fff0f6;
+    color: #cc0066;
+  }
+  
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: 2rem;
+    }
+    
+    .update-item {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .update-date {
+      min-width: auto;
+      padding-top: 0;
+    }
+  }

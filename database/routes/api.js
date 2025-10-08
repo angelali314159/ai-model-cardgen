@@ -4,6 +4,23 @@ import db from "../db/connection.js";
 
 const router = express.Router();
 
+// Get all model cards
+router.get("/model-cards", async (req, res) => {
+    try {
+        const collection = db.collection("ModelCardInfo");
+        const models = await collection.find({}).toArray();
+        
+        res.json(models);
+    } catch (error) {
+        console.error("API Error:", error);
+        res.status(500).json({ 
+            error: "Internal server error",
+            details: error.message 
+        });
+    }
+});
+
+// Generate new model card
 router.post("/model-card", async (req, res) => {
     const { modelName, developerName } = req.body;
     

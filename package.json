@@ -10,7 +10,7 @@
       "test:gemini": "python testing/test_gemini_api.py",
       "test:cardinfo": "node testing/test_card_info.js",
       "backend": "cd database && npm start",
-      "install:all": "npm run install:deps && npm run install:db",
+      "install:all":"cd database && npm install && cd ../frontend && npm install",
       "clean": "cd output && rm -f scraped_data.json extracted_model_info.json",
       "frontend": "cd frontend && npm start",
       "dev": "concurrently \"npm run backend\" \"npm run frontend\""
