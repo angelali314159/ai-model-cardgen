@@ -10,15 +10,19 @@
         "test:gemini": "python testing/test_gemini_api.py",
         "test:cardinfo": "node testing/test_card_info.js",
         "backend": "cd database && npm start",
+        "backend:dev": "cd database && NODE_ENV=development npm start",
+        "frontend": "cd frontend && npm start",
+        "frontend:build": "cd frontend && npm run build",
         "install:all": "npm install && cd database && npm install && cd ../frontend && npm install",
         "clean": "cd output && rm -f scraped_data.json extracted_model_info.json",
-        "frontend": "cd frontend && npm start",
-        "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+        "dev": "concurrently \"npm run backend:dev\" \"npm run frontend\"",
+        "build": "cd frontend && npm install && npm run build",
+        "start:prod": "npm run build && npm run backend"
     },
     "keywords": [
         "ai",
         "model-card",
-        "web-scraping",
+        "web-scraping", 
         "gemini-api",
         "healthcare",
         "machine-learning",
@@ -27,42 +31,10 @@
     ],
     "author": "Your Name",
     "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/yourusername/ai-model-cardgen.git"
-    },
-    "engines": {
-        "node": ">=18.0.0",
-        "python": ">=3.8.0"
-    },
-    "devDependencies": {
-        "nodemon": "^3.0.0"
-    },
     "dependencies": {
         "concurrently": "^9.2.1"
     },
-    "python": {
-        "dependencies": [
-            "selenium>=4.35.0",
-            "google-generativeai>=0.8.3",
-            "python-dotenv>=1.0.1",
-            "protobuf>=4.25.5"
-        ],
-        "dev-dependencies": [
-            "black>=22.0.0",
-            "flake8>=4.0.0",
-            "pytest>=7.0.0"
-        ]
-    },
-    "directories": {
-        "test": "testing"
-    },
-    "files": [
-        "generate_model.py",
-        "web_scraper.py",
-        "fill_card.py",
-        "list_of_wanted_fields.csv",
-        "requirements.txt",
-        "README.md"
-    ]
+    "devDependencies": {
+        "nodemon": "^3.0.0"
+    }
 }
