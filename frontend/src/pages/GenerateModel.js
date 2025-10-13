@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ModelCard from '../components/ModelCard';
 import ModelDetailPopup from '../components/ModelDetailPopup';
-import GenerateModelForm from './GenerateModelForm';
+import GenerateModelForm from './GenerateModelForm'; // Fixed import path
 import '../styles/GenerateModel.css';
 
 const GenerateModel = () => {
@@ -27,8 +27,11 @@ const GenerateModel = () => {
       setLoading(true);
       const response = await fetch('/api/model-cards');
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json(); // Fixed: Only call json() once
+        console.log('Fetched model cards successfully:', data);
         setModelCards(data);
+      } else {
+        console.error('Failed to fetch model cards:', response.status, response.statusText);
       }
     } catch (error) {
       console.error('Error fetching model cards:', error);
@@ -38,26 +41,31 @@ const GenerateModel = () => {
   };
 
   const filterAndSortCards = () => {
+    // Fixed: Updated field names to match your database structure
     let filtered = modelCards.filter(card =>
-      card.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      card.developer_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      card.regulatory_org?.toLowerCase().includes(searchTerm.toLowerCase())
+      card.model_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card.developer?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card.regulatory_approval_status_if_applicable?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      card.summary?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (card.keywords && Array.isArray(card.keywords) && 
+       card.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase())))
     );
 
-    // Sort cards
+    // Fixed: Updated sort fields to match database structure
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'name':
-          return (a.name || '').localeCompare(b.name || '');
+          return (a.model_name || '').localeCompare(b.model_name || '');
         case 'date':
-          return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+          return new Date(b.release_date || 0) - new Date(a.release_date || 0);
         case 'developer':
-          return (a.developer_name || '').localeCompare(b.developer_name || '');
+          return (a.developer || '').localeCompare(b.developer || '');
         default:
           return 0;
       }
     });
 
+    console.log('Filtered cards:', filtered); // Debug log
     setFilteredCards(filtered);
   };
 
@@ -118,22 +126,34 @@ const GenerateModel = () => {
         {showFilters && (
           <div className="filters-panel">
             <div className="filter-group">
-              <label>Regulatory Organization:</label>
+              <label>Regulatory Status:</label>
               <select className="filter-select">
-                <option value="">All Organizations</option>
-                <option value="FDA">FDA</option>
-                <option value="CE">CE Mark</option>
-                <option value="Other">Other</option>
+                <option value="">All Status</option>
+                <option value="FDA Approved">FDA Approved</option>
+                <option value="CE Mark">CE Mark</option>
+                <option value="Pending">Pending</option>
+                <option value="Not Applicable">Not Applicable</option>
               </select>
             </div>
             
             <div className="filter-group">
-              <label>Risk Level:</label>
+              <label>Clinical Risk Level:</label>
               <select className="filter-select">
                 <option value="">All Risk Levels</option>
                 <option value="Low">Low Risk</option>
                 <option value="Medium">Medium Risk</option>
                 <option value="High">High Risk</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Release Stage:</label>
+              <select className="filter-select">
+                <option value="">All Stages</option>
+                <option value="Production">Production</option>
+                <option value="Beta">Beta</option>
+                <option value="Alpha">Alpha</option>
+                <option value="Development">Development</option>
               </select>
             </div>
           </div>
@@ -148,7 +168,12 @@ const GenerateModel = () => {
           ) : filteredCards.length === 0 ? (
             <div className="empty-state">
               <h3>No model cards found</h3>
-              <p>Try adjusting your search or generate a new model card</p>
+              <p>
+                {searchTerm 
+                  ? `No model cards match "${searchTerm}". Try adjusting your search.`
+                  : 'No model cards available yet. Generate your first one!'
+                }
+              </p>
               <button 
                 className="generate-first-btn"
                 onClick={() => setShowGenerateForm(true)}
