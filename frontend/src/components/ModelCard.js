@@ -2,88 +2,86 @@ import React from 'react';
 import '../styles/ModelCard.css';
 
 const ModelCard = ({ model, onLearnMore }) => {
-  const getRiskLevelColor = (risk) => {
-    switch (risk?.toLowerCase()) {
-      case 'low': return '#10b981';
-      case 'medium': return '#f59e0b';
-      case 'high': return '#ef4444';
-      default: return '#6b7280';
+  const formatDate = (dateString) => {
+    if (!dateString || dateString === 'YYYY-MM-DD') return 'Not specified';
+    try {
+      return new Date(dateString).toLocaleDateString();
+    } catch {
+      return dateString;
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString();
+  const getCitationCount = () => {
+    if (model.peer_reviewed_publications && Array.isArray(model.peer_reviewed_publications)) {
+      return model.peer_reviewed_publications.length;
+    }
+    return 0;
+  };
+
+  const truncateSummary = (text, maxLength = 120) => {
+    if (!text) return '';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + '...';
   };
 
   return (
     <div className="model-card">
-      <div className="card-header">
-        <h3 className="card-title">{model.name || 'Unnamed Model'}</h3>
-        <div className="card-badges">
-          {model.regulatory_org && (
-            <span className="badge regulatory">
-              {model.regulatory_org}
-            </span>
-          )}
-          {model.clinical_risk_level && (
-            <span 
-              className="badge risk-level"
-              style={{ backgroundColor: getRiskLevelColor(model.clinical_risk_level) }}
-            >
-              {model.clinical_risk_level} Risk
-            </span>
-          )}
-        </div>
+      {/* Model name - largest font */}
+      <div className="card-title-section">
+        <h3 className="model-name">{model.model_name || 'Unnamed Model'}</h3>
       </div>
 
-      <div className="card-content">
-        <div className="info-row">
-          <span className="info-label">Developer:</span>
-          <span className="info-value">
-            {model.developer_name || model.review_name || 'Unknown'}
-          </span>
-        </div>
-
-        <div className="info-row">
-          <span className="info-label">Last Updated:</span>
-          <span className="info-value">
-            {formatDate(model.updated_at || model.created_at)}
-          </span>
-        </div>
-
-        {model.primary_intended_users && (
-          <div className="info-row">
-            <span className="info-label">Intended Users:</span>
-            <span className="info-value">
-              {Array.isArray(model.primary_intended_users) 
-                ? model.primary_intended_users.slice(0, 2).join(', ')
-                : model.primary_intended_users
-              }
-              {Array.isArray(model.primary_intended_users) && model.primary_intended_users.length > 2 && '...'}
-            </span>
-          </div>
-        )}
-
-        {model.summary && (
-          <div className="card-summary">
-            <p>{model.summary.substring(0, 120)}...</p>
-          </div>
-        )}
+      {/* Developer info */}
+      <div className="developer-section">
+        <p className="developer-info">
+          Developed by <strong>{model.developer || 'Unknown Developer'}</strong>
+        </p>
       </div>
 
+      {/* Keywords tags in ovals */}
+      {model.keywords && Array.isArray(model.keywords) && model.keywords.length > 0 && (
+        <div className="tags-section">
+          {model.keywords.slice(0, 4).map((keyword, index) => (
+            <span key={index} className="keyword-tag">
+              {keyword}
+            </span>
+          ))}
+          {model.keywords.length > 4 && (
+            <span className="keyword-tag more-tags">+{model.keywords.length - 4}</span>
+          )}
+        </div>
+      )}
+
+      {/* Summary preview */}
+      {model.summary && (
+        <div className="summary-preview">
+          <p>{truncateSummary(model.summary)}</p>
+        </div>
+      )}
+
+      {/* Bottom section with details and learn more */}
       <div className="card-footer">
-        <div className="card-stats">
-          <span className="stat">
-            📊 {Object.keys(model).length} fields
-          </span>
+        <div className="card-details">
+          <div className="detail-row">
+            <span className="detail-label">Citations:</span>
+            <span className="detail-value">{getCitationCount()}</span>
+          </div>
+          <div className="detail-row">
+            <span className="detail-label">Version:</span>
+            <span className="detail-value">{model.version || 'N/A'}</span>
+          </div>
+          <div className="detail-row">
+            <span className="detail-label">Last Updated:</span>
+            <span className="detail-value">{formatDate(model.release_date)}</span>
+          </div>
         </div>
-        <button 
-          className="learn-more-btn"
-          onClick={() => onLearnMore(model)}
-        >
-          Learn More →
-        </button>
+
+        <div className="learn-more-section">
+          <button className="learn-more-btn" onClick={() => onLearnMore(model)}>
+            <span>Learn More</span>
+            <span className="arrow">→</span>
+          </button>
+        </div>
       </div>
     </div>
   );
