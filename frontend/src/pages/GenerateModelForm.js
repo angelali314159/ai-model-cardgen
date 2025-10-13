@@ -4,6 +4,7 @@ import '../styles/GenerateModelForm.css';
 const GenerateModelForm = ({ onModelGenerated }) => {
   const [applicationName, setApplicationName] = useState('');
   const [applicationUrl, setApplicationUrl] = useState('');
+  const [developer, setDeveloper] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -41,7 +42,8 @@ const GenerateModelForm = ({ onModelGenerated }) => {
         },
         body: JSON.stringify({
           applicationName: applicationName.trim(),
-          applicationUrl: applicationUrl.trim()
+          applicationUrl: applicationUrl.trim(),
+          developer: developer.trim()
         }),
       });
 
@@ -69,6 +71,7 @@ const GenerateModelForm = ({ onModelGenerated }) => {
   const handleReset = () => {
     setApplicationName('');
     setApplicationUrl('');
+    setDeveloper('');
     setError('');
     setSuccess('');
   };
@@ -114,6 +117,24 @@ const GenerateModelForm = ({ onModelGenerated }) => {
             />
             <small className="field-hint">
               Enter the main website or documentation URL for this AI application
+            </small>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="developer">
+              Developer
+            </label>
+            <input
+              type="text"
+              id="developer"
+              value={developer}
+              onChange={(e) => setDeveloper(e.target.value)}
+              placeholder="e.g., Google, Microsoft, OpenAI"
+              disabled={loading}
+              className="input-field"
+            />
+            <small className="field-hint">
+              Enter the organization or company that developed this AI application
             </small>
           </div>
 

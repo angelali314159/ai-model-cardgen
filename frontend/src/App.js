@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import './styles/App.css';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('Generate Model');
+  const [activeTab, setActiveTab] = useState('');
 
   const renderContent = () => {
     switch (activeTab) {
