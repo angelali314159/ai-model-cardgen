@@ -1,5 +1,7 @@
 import React from 'react';
 import '../styles/Footer.css';
+import MMLogo from './MM-Logo.png';
+import MMText from './MedicalModelsHeader.png';
 
 const Footer = () => {
   return (
@@ -9,8 +11,8 @@ const Footer = () => {
           {/* Left side - Logo and tagline */}
           <div className="footer-left">
             <div className="footer-logo">
-              <img src="/logo.png" alt="MedAI Cards" className="footer-logo-image" />
-              <span className="footer-logo-text">Medical Models</span>
+              <img src={MMLogo} alt="MedAI Cards" className="footer-logo-image" />
+              <img src={MMText} alt="Medical Models" className="footer-logo-text" />
             </div>
             <h1 className="footer-tagline">Bring Clarity to Your Insights</h1>
           </div>
