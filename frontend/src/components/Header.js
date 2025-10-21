@@ -10,7 +10,7 @@ const Header = ({ activeTab, setActiveTab }) => {
         <div className="logo-section">
           <div className="logo">
             <img src="/logo.png" alt="Medical AI" className="logo-image" onClick={() => setActiveTab("App")}/>
-            <span className="logo-text">MedAI Cards</span>
+            <span className="logo-text">Medical Models</span>
           </div>
         </div>
         
