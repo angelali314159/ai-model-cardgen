@@ -1,5 +1,8 @@
 import React from 'react';
 import '../styles/Header.css';
+import MMLogo from './MM-Logo.png';
+import MMText from './MedicalModelsHeader.png';
+
 
 const Header = ({ activeTab, setActiveTab }) => {
   const tabs = ['Updates', 'Generate Model', 'About Us'];
@@ -9,8 +12,8 @@ const Header = ({ activeTab, setActiveTab }) => {
       <div className="header-container">
         <div className="logo-section">
           <div className="logo">
-            <img src="/logo.png" alt="Medical AI" className="logo-image" onClick={() => setActiveTab("App")}/>
-            <span className="logo-text">Medical Models</span>
+            <img src={MMLogo} alt="Medical AI" className="logo-image" onClick={() => setActiveTab("App")}/>
+            <img src={MMText} alt="Medical Models" className="logo-text" onClick={() => setActiveTab("App")}/>
           </div>
         </div>
         
