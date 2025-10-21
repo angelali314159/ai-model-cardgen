@@ -1,5 +1,5 @@
 .model-card {
-  background-color: #ffffff;
+  background-color: #F0F0F0;
   border: 1px solid #e5e5e5;
   border-radius: 16px;
   padding: 24px;
@@ -59,8 +59,8 @@
 .keyword-tag {
   display: inline-block;
   padding: 6px 14px;
-  background-color: #f8f9fa;
-  color: #495057;
+  background-color: #3A3A3A;
+  color: #F5F5F5;
   border: 1px solid #dee2e6;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -71,7 +71,7 @@
 
 .keyword-tag.more-tags {
   background-color: #e9ecef;
-  color: #6c757d;
+  color: #3A3A3A;
   font-weight: 600;
 }
 

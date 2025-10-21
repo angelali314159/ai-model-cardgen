@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="footer-left">
             <div className="footer-logo">
               <img src="/logo.png" alt="MedAI Cards" className="footer-logo-image" />
-              <span className="footer-logo-text">MedAI Cards</span>
+              <span className="footer-logo-text">Medical Models</span>
             </div>
             <h1 className="footer-tagline">Bring Clarity to Your Insights</h1>
           </div>
